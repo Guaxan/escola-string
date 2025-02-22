@@ -14,8 +14,13 @@ public class ProfessorService {
 	@Autowired
 	private ProfessorRepository professorRepository;
 
-	public String save(Professor professorModel) {
-		this.professorRepository.save(professorModel);
+	public String save(Professor professor) {
+		validarEmail(professor.getEmail());
+		if(professorRepository.existsByEmail(professor.getEmail())) {
+			throw new RuntimeException("Email já cadastrado");
+		}
+		
+		this.professorRepository.save(professor);
 		return "Professor salvo com sucesso!";
 	}
 
@@ -36,5 +41,23 @@ public class ProfessorService {
 	public String delete(long id) {
 		this.professorRepository.deleteById(id);
 		return "Professor removido com sucesso!";
+	}
+	
+	public List<Professor> findByNameOrSpeciality(String nome){
+		return this.professorRepository.findByNomeStartingWithOrEspecialidadeStartingWith(nome, nome);
+	}
+	
+	public List<Professor> findByTeacherNotGmail(){
+		return this.professorRepository.findByEmailNotContainingGmail();
+	}
+
+	public Professor findByEmail(String email) {
+		return this.professorRepository.findByEmail(email);
+	}
+	
+	private void validarEmail(String email) {
+		if(email.contains("@outlook.com")) {
+			throw new RuntimeException("Dominio não permitido");
+		}
 	}
 }

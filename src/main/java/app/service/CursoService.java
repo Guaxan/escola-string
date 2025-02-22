@@ -37,4 +37,9 @@ public class CursoService {
 		this.cursoRepository.deleteById(id);
 		return "Curso removido com sucesso";
 	}
+	
+	public Curso findByNomeIgnoreCase(String nome) {
+		return this.cursoRepository.findByNomeIgnoreCase(nome);
+	}
+	
 }

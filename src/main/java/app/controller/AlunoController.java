@@ -2,8 +2,6 @@ package app.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +23,6 @@ import app.service.AlunoService;
 @RequestMapping("/api/aluno")
 public class AlunoController {
 	
-    private static final Logger logger = LoggerFactory.getLogger(AlunoController.class);
 	
 	@Autowired
 	private AlunoService alunoService;
@@ -34,10 +31,9 @@ public class AlunoController {
 	public ResponseEntity<String> save(@RequestBody Aluno alunoModel){
 		try {
 			String message = this.alunoService.save(alunoModel);
-			return new ResponseEntity<>(message, HttpStatus.OK);
+			return new ResponseEntity<>(message, HttpStatus.CREATED);
 		} catch (Exception e) {
-			logger.error("Erro ao salvar aluno", e); 
-			return new ResponseEntity<>("Deu ruim!", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -66,7 +62,6 @@ public class AlunoController {
 		try {
 			return new ResponseEntity<>(this.alunoService.findByNomeStartingWith(nome), HttpStatus.OK);
 		} catch (Exception e){
-			logger.error("Erro >", e); 
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -76,7 +71,6 @@ public class AlunoController {
 		try {
 			return new ResponseEntity<>(this.alunoService.findByTelefoneContaining(telefone), HttpStatus.OK);
 		} catch (Exception e){
-			logger.error("Erro >", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -86,7 +80,6 @@ public class AlunoController {
 		try {
 			return new ResponseEntity<>(this.alunoService.findByTurmaNome(nome), HttpStatus.OK);
 		} catch (Exception e){
-			logger.error("Erro >", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}

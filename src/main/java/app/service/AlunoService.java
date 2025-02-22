@@ -15,6 +15,12 @@ public class AlunoService {
 	private AlunoRepository alunoRepository;
 
 	public String save(Aluno aluno) {
+		validarCadastro(aluno);
+		
+		if(alunoRepository.existsByCpf(aluno.getCpf())) {
+			throw new RuntimeException("CPF já cadastrado!");
+		}
+		
 		this.alunoRepository.save(aluno);
 		return "Aluno salvo com sucesso!";
 	}
@@ -29,6 +35,7 @@ public class AlunoService {
 
 	public String update(Aluno aluno, long id) {
 		aluno.setId(id);
+		validarCadastro(aluno);
 		this.alunoRepository.save(aluno);
 		return "Aluno atualizado com sucesso";
 	}
@@ -48,5 +55,9 @@ public class AlunoService {
 	
 	public List<Aluno> findByTurmaNome(String nome){
 		return this.alunoRepository.findByTurmaNome(nome);
+	}
+	
+	private void validarCadastro(Aluno aluno) {
+		aluno.setCadastroCompleto(aluno.getTelefone() != null && !aluno.getTelefone().isEmpty());
 	}
 }

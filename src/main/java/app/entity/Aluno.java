@@ -29,10 +29,12 @@ public class Aluno {
 	@Pattern(regexp = "\\S+\\s+\\S+.*$", message = "O nome deve conter duas palavras")
 	private String nome;
 
-	@CPF(message = "O CPF estar formatado!")
+	@CPF(message = "O CPF precisa estar formatado!")
 	private String cpf;
 
 	private String telefone;
+	
+	private boolean cadastroCompleto;
 
 	@ManyToOne
 	private Turma turma;

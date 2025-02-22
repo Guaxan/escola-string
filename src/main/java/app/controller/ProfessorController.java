@@ -2,8 +2,6 @@ package app.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Professor;
@@ -23,19 +22,16 @@ import app.service.ProfessorService;
 @RequestMapping("/api/professor")
 public class ProfessorController {
 	
-    private static final Logger logger = LoggerFactory.getLogger(AlunoController.class);
 
 	@Autowired
 	private ProfessorService professorService;
 	
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody Professor professorModel){
+	public ResponseEntity<String> save(@RequestBody Professor professorModel){		
 		try {
-			String message = this.professorService.save(professorModel);
-			return new ResponseEntity<>(message, HttpStatus.OK);
+			return new ResponseEntity<>(this.professorService.save(professorModel), HttpStatus.CREATED);
 		}catch (Exception e) {
-			logger.error("Erro ao salvar professor", e); 
-			return new ResponseEntity<>("Deu Ruim!", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -60,13 +56,39 @@ public class ProfessorController {
 		}
 	}
 	
+	@GetMapping("/findByNameOrSpeciality")
+	public ResponseEntity<List<Professor>> findByNameOrSpeciality(@RequestParam String nome){
+		try {
+			return new ResponseEntity<>(this.professorService.findByNameOrSpeciality(nome), HttpStatus.OK);
+		} catch (Exception e){
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findByTeacherNotGmail")
+	public ResponseEntity<List<Professor>> findByTeacherNotGmail(){
+		try {
+			return new ResponseEntity<>(this.professorService.findByTeacherNotGmail(), HttpStatus.OK);
+		} catch (Exception e){
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findByTeacherEmail")
+	public ResponseEntity<Professor> findByTeacherEmail(@RequestParam String email){
+		try {
+			return new ResponseEntity<>(this.professorService.findByEmail(email), HttpStatus.OK);
+		} catch (Exception e){
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> update(@RequestBody Professor professorModel, @PathVariable long id){
 		try {
 			String message = this.professorService.update(professorModel, id);
 			return new ResponseEntity<>(message, HttpStatus.OK);
-		} catch (Exception e) {
-			logger.error("Erro ao salvar professor", e); 
+		} catch (Exception e) { 
 			return new ResponseEntity<>("Deu ruim!", HttpStatus.BAD_REQUEST);
 		}
 	}

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Turma;
@@ -50,6 +51,42 @@ public class TurmaController {
 			List<Turma> list = this.turmaService.findAll();
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		} catch (Exception e){
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findByClassYear")
+	public ResponseEntity<List<Turma>> findByClassYear(int ano1, int ano2){
+		try {
+			return new ResponseEntity<>(this.turmaService.findByClassPerYear(ano1, ano2), HttpStatus.OK);
+		} catch (Exception e){
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findBySemestreAndAno")
+	public ResponseEntity<List<Turma>> findBySemestreAndAno(String semestre, int ano){
+		try {
+			return new ResponseEntity<>(this.turmaService.findBySemestreAndAno(semestre, ano), HttpStatus.OK);
+		} catch (Exception e){
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findByNomeAndTurno")
+	public ResponseEntity<List<Turma>> findByNomeAndTurno(String nome, String turno){
+		try {
+			return new ResponseEntity<>(this.turmaService.findByNomeAndTurno(nome, turno), HttpStatus.OK);
+		} catch (Exception e){
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findByNome")
+	public ResponseEntity<Turma> findByNome(@RequestParam String nome){
+		try {
+			return new ResponseEntity<>(turmaService.findByNome(nome), HttpStatus.OK);
+		} catch(Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
