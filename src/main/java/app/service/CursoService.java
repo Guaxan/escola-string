@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.entity.CursoModel;
+import app.entity.Curso;
 import app.repository.CursoRepository;
 
 @Service
@@ -14,20 +14,20 @@ public class CursoService {
 	@Autowired
 	private CursoRepository cursoRepository;
 
-	public String save(CursoModel cursoModel) {
+	public String save(Curso cursoModel) {
 		this.cursoRepository.save(cursoModel);
 		return "Curso salvo com sucesso!";
 	}
 
-	public CursoModel findById(long id) {
+	public Curso findById(long id) {
 		return this.cursoRepository.findById(id).get();
 	}
 
-	public List<CursoModel> findAll() {
+	public List<Curso> findAll() {
 		return this.cursoRepository.findAll();
 	}
 
-	public String update(CursoModel cursoModel, long id) {
+	public String update(Curso cursoModel, long id) {
 		cursoModel.getId();
 		this.cursoRepository.save(cursoModel);
 		return "Curso atualizado com sucesso!";

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.entity.TurmaModel;
+import app.entity.Turma;
 import app.repository.TurmaRepository;
 
 @Service
@@ -14,20 +14,20 @@ public class TurmaService {
 	@Autowired
 	private TurmaRepository turmaRepository;
 	
-	public String save(TurmaModel turmaModel) {
+	public String save(Turma turmaModel) {
 		this.turmaRepository.save(turmaModel);
 		return "Turma salva com sucesso!";
 	}
 	
-	public TurmaModel findById(long id) {
+	public Turma findById(long id) {
 		return this.turmaRepository.findById(id).get();
 	}
 	
-	public List<TurmaModel> findAll(){
+	public List<Turma> findAll(){
 		return this.turmaRepository.findAll();
 	}
 	
-	public String update(TurmaModel turmaModel, long id) {
+	public String update(Turma turmaModel, long id) {
 		turmaModel.setId(id);
 		this.turmaRepository.save(turmaModel);
 		return "Turma atualizada com sucesso";

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.entity.TurmaModel;
+import app.entity.Turma;
 import app.service.TurmaService;
 
 @RestController
@@ -25,7 +25,7 @@ public class TurmaController {
 	private TurmaService turmaService;
 	
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody TurmaModel turmaModel){
+	public ResponseEntity<String> save(@RequestBody Turma turmaModel){
 		try {
 			String message = this.turmaService.save(turmaModel);
 			return new ResponseEntity<>(message, HttpStatus.OK);
@@ -35,9 +35,9 @@ public class TurmaController {
 	}
 	
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<TurmaModel> findById(@PathVariable long id){
+	public ResponseEntity<Turma> findById(@PathVariable long id){
 		try {
-			TurmaModel turmaModel = turmaService.findById(id);
+			Turma turmaModel = turmaService.findById(id);
 			return new ResponseEntity<>(turmaModel, HttpStatus.OK);
 		} catch(Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -45,9 +45,9 @@ public class TurmaController {
 	}
 	
 	@GetMapping("/findAll")
-	public ResponseEntity<List<TurmaModel>> findAll(){
+	public ResponseEntity<List<Turma>> findAll(){
 		try {
-			List<TurmaModel> list = this.turmaService.findAll();
+			List<Turma> list = this.turmaService.findAll();
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		} catch (Exception e){
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -55,7 +55,7 @@ public class TurmaController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@RequestBody TurmaModel turmaModel, @PathVariable long id){
+	public ResponseEntity<String> update(@RequestBody Turma turmaModel, @PathVariable long id){
 		try {
 			String message = this.turmaService.update(turmaModel, id);
 			return new ResponseEntity<>(message, HttpStatus.OK);

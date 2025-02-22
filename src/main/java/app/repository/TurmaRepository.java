@@ -2,8 +2,8 @@ package app.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import app.entity.TurmaModel;
+import app.entity.Turma;
 
-public interface TurmaRepository extends JpaRepository<TurmaModel, Long>{
+public interface TurmaRepository extends JpaRepository<Turma, Long>{
 
 }

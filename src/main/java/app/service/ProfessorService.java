@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.entity.ProfessorModel;
+import app.entity.Professor;
 import app.repository.ProfessorRepository;
 
 @Service
@@ -14,20 +14,20 @@ public class ProfessorService {
 	@Autowired
 	private ProfessorRepository professorRepository;
 
-	public String save(ProfessorModel professorModel) {
+	public String save(Professor professorModel) {
 		this.professorRepository.save(professorModel);
 		return "Professor salvo com sucesso!";
 	}
 
-	public ProfessorModel findById(long id) {
+	public Professor findById(long id) {
 		return this.professorRepository.findById(id).get();
 	}
 
-	public List<ProfessorModel> findAll() {
+	public List<Professor> findAll() {
 		return this.professorRepository.findAll();
 	}
 
-	public String update(ProfessorModel professorModel, long id) {
+	public String update(Professor professorModel, long id) {
 		professorModel.setId(id);
 		this.professorRepository.save(professorModel);
 		return "Professor atualizado com sucesso";

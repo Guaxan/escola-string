@@ -2,8 +2,8 @@ package app.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import app.entity.CursoModel;
+import app.entity.Curso;
 
-public interface CursoRepository extends JpaRepository<CursoModel, Long>{
+public interface CursoRepository extends JpaRepository<Curso, Long>{
 
 }

@@ -1,10 +1,14 @@
 package app.entity;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,15 +19,21 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TurmaModel {
+
+public class Aluno {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	@NotBlank(message = "O nome da turma nao pode ser vazio!")
+
+	@NotBlank(message = "O campo nome do aluno é obrigatório")
+	@Pattern(regexp = "\\S+\\s+\\S+.*$", message = "O nome deve conter duas palavras")
 	private String nome;
-	
-	private String semestre;
-	private int ano;
-	private String turno;
+
+	@CPF(message = "O CPF estar formatado!")
+	private String cpf;
+
+	private String telefone;
+
+	@ManyToOne
+	private Turma turma;
 }
